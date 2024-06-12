@@ -1,0 +1,8 @@
+execute_commands_on_start:
+  enabled: false
+  commands:
+    - animatedsb toggle off %player%
+execute_commands_on_finish:
+  enabled: false
+  commands:
+    - animatedsb toggle on %player%

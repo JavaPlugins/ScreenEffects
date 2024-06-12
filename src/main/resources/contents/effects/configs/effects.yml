@@ -1,0 +1,17 @@
+info:
+  namespace: effects
+font_images:
+  fullscreen:
+    permission: admin.fullscreen
+    show_in_gui: false
+    suggest_in_command: false
+    path: "fullscreen.png"
+    scale_ratio: 2048
+    y_position: 256
+  fullscreen_transparent:
+    permission: admin.fullscreen_transparent
+    show_in_gui: false
+    suggest_in_command: false
+    path: "fullscreen_transparent.png"
+    scale_ratio: 2048
+    y_position: 256

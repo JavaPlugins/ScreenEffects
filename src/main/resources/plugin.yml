@@ -1,0 +1,19 @@
+name: ScreenEffects
+version: 1.0.16
+main: dev.lone.ScreenEffects.Main
+api-version: 1.16
+authors: [LoneDev]
+description: Custom screen effects
+website: devs.beer
+softdepend:
+  - ViaVersion
+  - PlaceholderAPI
+depend:
+  - ItemsAdder
+  - LoneLibs
+  - ProtocolLib
+commands:
+  screeneffect:
+    description: Shows screen effect to player
+    usage: /screeneffect <effect> <color> <fadein> <stay> <fadeout> <feeze|nofreeze> [player] [message]
+    permission: "screeneffect.show"
