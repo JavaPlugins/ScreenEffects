@@ -109,6 +109,13 @@
         </dependency>
         <dependency>
             <groupId>libs</groupId>
+            <artifactId>NMS_v1_21_1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${jars_libs_folder}/spigot/spigot-1.21.1-R0.1-SNAPSHOT.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>libs</groupId>
             <artifactId>NMS_v1_20_6</artifactId>
             <version>1.0</version>
             <scope>system</scope>

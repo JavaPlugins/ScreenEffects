@@ -68,6 +68,9 @@ public class GamemodeNMS
             case v1_20_6:
                 nms = new GamemodeNMS_v1_20_6();
                 break;
+            case v1_21_1:
+                nms = new GamemodeNMS_v1_21_1();
+                break;
         }
         //</editor-fold>
     }

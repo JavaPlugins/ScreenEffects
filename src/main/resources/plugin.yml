@@ -1,5 +1,5 @@
 name: ScreenEffects
-version: 1.0.16
+version: 1.0.17
 main: dev.lone.ScreenEffects.Main
 api-version: 1.16
 authors: [LoneDev]
