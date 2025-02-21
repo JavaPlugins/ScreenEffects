@@ -16,6 +16,7 @@ libraries:
   - beer.devs:FastNbt-jar:1.4.2
   - org.fusesource.jansi:jansi:2.4.1
   - commons-io:commons-io:2.18.0
+  - org.jetbrains:annotations:17.0.0
 commands:
   screeneffect:
     description: Shows screen effect to player

@@ -78,6 +78,18 @@
 
     <repositories>
         <repository>
+            <id>matteodev</id>
+            <url>https://maven.devs.beer/</url>
+        </repository>
+        <repository>
+            <id>viaversion-repo</id>
+            <url>https://repo.viaversion.com</url>
+        </repository>
+        <repository>
+            <id>dmulloy2-repo</id>
+            <url>https://repo.dmulloy2.net/repository/public/</url>
+        </repository>
+        <repository>
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
@@ -92,14 +104,12 @@
     </repositories>
 
     <dependencies>
-
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>17.0.0</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
@@ -122,28 +132,25 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.18.0</version>
+            <scope>provided</scope>
         </dependency>
-
         <dependency>
-            <groupId>libs</groupId>
+            <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${jars_libs_folder}/ProtocolLib.jar</systemPath>
+            <version>5.1.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>libs</groupId>
-            <artifactId>ItemsAdder</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${jars_libs_folder}/ItemsAdder.jar</systemPath>
+            <groupId>dev.lone</groupId>
+            <artifactId>api-itemsadder</artifactId>
+            <version>4.0.2-beta-release-11</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>libs</groupId>
-            <artifactId>ViaVersion</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${jars_libs_folder}/ViaVersion-4.0.0-21w19a.jar</systemPath>
+            <groupId>com.viaversion</groupId>
+            <artifactId>viaversion-api</artifactId>
+            <version>5.2.1</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>me.clip</groupId>

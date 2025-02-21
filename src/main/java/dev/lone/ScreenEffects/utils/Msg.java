@@ -1,6 +1,5 @@
 package dev.lone.ScreenEffects.utils;
 
-import dev.lone.itemsadder.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -118,24 +117,8 @@ public class Msg
     {
         player.sendMessage(PREFIX + message);
     }
-
-    public static void localized(CommandSender commandSender, String path)
-    {
-        commandSender.sendMessage(PREFIX + Main.lang.getLocalized(path));
-    }
-
     public static void message(CommandSender sender, String message)
     {
         sender.sendMessage(PREFIX + message);
-    }
-
-    public static void messageAllOp(String message)
-    {
-        log(message);
-        for (Player sender : Bukkit.getOnlinePlayers())
-        {
-            if (sender.isOp())
-                sender.sendMessage(PREFIX + message);
-        }
     }
 }
