@@ -1,7 +1,7 @@
 package dev.lone.ScreenEffects;
 
-import dev.lone.LoneLibs.nbt.nbtapi.utils.MinecraftVersion;
-import dev.lone.ScreenEffects.NMS.GamemodeNMS;
+import beer.devs.fastnbt.nms.Version;
+import dev.lone.ScreenEffects.utils.Msg;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,63 +23,38 @@ import java.util.zip.ZipInputStream;
 
 public final class Main extends JavaPlugin implements Listener
 {
-    private static Main instance;
-    public static boolean isPapermc = false;
-    public static boolean showWarnOnJoin = false;
+    private static Main inst;
 
+    public static boolean IS_PAPER = false;
+    public static boolean HAS_VIA_VERSION;
+    public static boolean HAS_PLACEHOLDER_API;
     public static boolean is_v_17_more;
-    public static boolean hasViaVersion;
-    public static boolean hasPlaceholderAPI;
 
     public WeakHashMap<Player, Boolean> frozen = new WeakHashMap<>();
-    private ScreenEffectCommand screenEffectCommand;
-
-    public static dev.lone.LoneLibs.chat.Msg msg;
+    private Command command;
+    public static boolean showWarnOnJoin = false;
 
     public static Main inst()
     {
-        return instance;
+        return inst;
     }
 
     @Override
     public void onEnable()
     {
-        instance = this;
+        inst = this;
 
-        msg = new dev.lone.LoneLibs.chat.Msg("[ScreenEffects] ");
-        msg.setPrefix("[ScreenEffects] ");
-        msg.setPrefixConsole("[ScreenEffects] ");
+        Msg.setPrefix("[ScreenEffects] ");
+        Msg.setPrefixConsole("[ScreenEffects] ");
 
-        try {
-            isPapermc = Class.forName("com.destroystokyo.paper.VersionHistoryManager$VersionData") != null;
-        } catch (ClassNotFoundException e) {}
+        IS_PAPER = NMS.isPaper();
 
-        is_v_17_more = MinecraftVersion.isAtLeastVersion(MinecraftVersion.MC1_17_R1);
-        hasViaVersion = Bukkit.getPluginManager().isPluginEnabled("ViaVersion");
-        hasPlaceholderAPI = Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
+        is_v_17_more = Version.isAtLeast(Version.v1_17_R1);
+        HAS_VIA_VERSION = Bukkit.getPluginManager().isPluginEnabled("ViaVersion");
+        HAS_PLACEHOLDER_API = Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
 
-        //<editor-fold desc="Check lonelibs compatibility">
-        boolean isLoneLibsCompatible = false;
-        try
-        {
-            //noinspection UnnecessaryFullyQualifiedName
-            dev.lone.LoneLibs.LoneLibs.CompareVersionResult compareVersionResult = dev.lone.LoneLibs.LoneLibs.compareVersion("1.0.24");
-            //noinspection UnnecessaryFullyQualifiedName
-            isLoneLibsCompatible = compareVersionResult == dev.lone.LoneLibs.LoneLibs.CompareVersionResult.INSTALLED_IS_SAME
-                    || compareVersionResult == dev.lone.LoneLibs.LoneLibs.CompareVersionResult.INSTALLED_IS_NEWER;
-        }
-        catch (Throwable ignored) {}
-        if(!isLoneLibsCompatible)
-        {
-            getLogger().severe("Please update LoneLibs! https://www.spigotmc.org/resources/lonelibs.75974/");
-            Bukkit.getPluginManager().disablePlugin(this);
-            Bukkit.shutdown();
-        }
-        //</editor-fold>
-
-        GamemodeNMS.init();
-        screenEffectCommand = new ScreenEffectCommand();
-        screenEffectCommand.register();
+        command = new Command();
+        command.register();
 
         Bukkit.getPluginManager().registerEvents(this, this);
 
@@ -102,8 +77,8 @@ public final class Main extends JavaPlugin implements Listener
      */
     public static boolean hasTitleBug(Player player)
     {
-        if(Main.hasViaVersion)
-            return !(ViaVersionCompat.isClientVersionGreaterThan1_16_5(player));
+        if(Main.HAS_VIA_VERSION)
+            return !ViaVersionWrapper.isVersionGreaterThan1_16_5(player);
         return !Main.is_v_17_more;
     }
 
@@ -116,7 +91,7 @@ public final class Main extends JavaPlugin implements Listener
             ZipInputStream zip = null;
             try
             {
-                msg.log(ChatColor.AQUA + "    Extracting default effects from .jar");
+                Msg.log(ChatColor.AQUA + "    Extracting default effects from .jar");
 
                 zip = new ZipInputStream(jar.openStream());
                 while (true)
@@ -131,23 +106,23 @@ public final class Main extends JavaPlugin implements Listener
                         if (!dest.exists())
                         {
                             FileUtils.copyInputStreamToFile(this.getResource(name), dest);
-                            msg.log(ChatColor.AQUA + "       - Extracted " + name);
+                            Msg.log(ChatColor.AQUA + "       - Extracted " + name);
                             showWarnOnJoin = true;
                         }
                     }
                 }
-                msg.log(ChatColor.GREEN + "      DONE extracting default effects from .jar");
+                Msg.log(ChatColor.GREEN + "      DONE extracting default effects from .jar");
 
             } catch (IOException e)
             {
-                msg.error("        ERROR EXTRACTING DEFAULT effects! StackTrace:");
+                Msg.error("        ERROR EXTRACTING DEFAULT effects! StackTrace:");
                 e.printStackTrace();
             }
         }
 
         if(showWarnOnJoin)
         {
-            msg.warn("Please don't forget to regen your resourcepack using /iazip command.");
+            Msg.warn("Please don't forget to regen your resourcepack using /iazip command.");
         }
     }
 
@@ -166,7 +141,7 @@ public final class Main extends JavaPlugin implements Listener
         if(e.getPlayer().isOp())
         {
             Bukkit.getScheduler().runTaskLater(this, () -> {
-                msg.send(e.getPlayer(), ChatColor.RED + "Please don't forget to regen your resourcepack using /iazip command.");
+                Msg.message(e.getPlayer(), ChatColor.RED + "Please don't forget to regen your resourcepack using /iazip command.");
             }, 60L);
             showWarnOnJoin = false;
         }
@@ -175,6 +150,6 @@ public final class Main extends JavaPlugin implements Listener
     @EventHandler
     private void onQuit(PlayerQuitEvent e)
     {
-        screenEffectCommand.sentTitles.remove(e.getPlayer());
+        command.sentTitles.remove(e.getPlayer());
     }
 }

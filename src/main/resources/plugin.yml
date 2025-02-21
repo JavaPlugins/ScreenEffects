@@ -1,5 +1,5 @@
 name: ScreenEffects
-version: 1.0.17
+version: 1.0.18
 main: dev.lone.ScreenEffects.Main
 api-version: 1.16
 authors: [LoneDev]
@@ -12,6 +12,10 @@ depend:
   - ItemsAdder
   - LoneLibs
   - ProtocolLib
+libraries:
+  - beer.devs:FastNbt-jar:1.4.2
+  - org.fusesource.jansi:jansi:2.4.1
+  - commons-io:commons-io:2.18.0
 commands:
   screeneffect:
     description: Shows screen effect to player

@@ -100,104 +100,28 @@
             <scope>compile</scope>
         </dependency>
 
-
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <version>1.20.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>libs</groupId>
-            <artifactId>NMS_v1_21_1</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${jars_libs_folder}/spigot/spigot-1.21.1-R0.1-SNAPSHOT.jar</systemPath>
+            <groupId>beer.devs</groupId>
+            <artifactId>FastNbt-jar</artifactId>
+            <version>1.4.2</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>libs</groupId>
-            <artifactId>NMS_v1_20_6</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${jars_libs_folder}/spigot/spigot-1.20.6-R0.1-SNAPSHOT.jar</systemPath>
+            <groupId>org.fusesource.jansi</groupId>
+            <artifactId>jansi</artifactId>
+            <version>2.4.1</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>libs</groupId>
-            <artifactId>NMS_v1_20_R3</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${jars_libs_folder}/spigot/spigot-1.20.4-R0.1-SNAPSHOT.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>libs</groupId>
-            <artifactId>NMS_v1_20_R2</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${jars_libs_folder}/spigot/paper/purpur-1.20.2.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>libs</groupId>
-            <artifactId>NMS_v1_20_R1</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${jars_libs_folder}/spigot/spigot-1.20.1-R0.1-SNAPSHOT.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>libs</groupId>
-            <artifactId>NMS_v1_19_R3</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${jars_libs_folder}/spigot/paper/paper-1.19.4.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>libs</groupId>
-            <artifactId>NMS_v1_19_R2</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${jars_libs_folder}/spigot/paper/paper-1.19.3.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>libs</groupId>
-            <artifactId>NMS_v1_19_R1</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${jars_libs_folder}/spigot/spigot-1.19-R0.1-SNAPSHOT.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>libs</groupId>
-            <artifactId>NMS_v1_18</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${jars_libs_folder}/spigot/paper/paper-1.18.2.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>libs</groupId>
-            <artifactId>NMS_v1_17</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${jars_libs_folder}/spigot/paper/patched_1.17.1.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>libs</groupId>
-            <artifactId>NMS_v1_16_5</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${jars_libs_folder}/spigot/paper/patched_1.16.5.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>libs</groupId>
-            <artifactId>NMS_v1_15</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${jars_libs_folder}/spigot/paper/patched_1.15.2.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>libs</groupId>
-            <artifactId>NMS_v1_14</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${jars_libs_folder}/spigot/spigot-1.14.4.jar</systemPath>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.18.0</version>
         </dependency>
 
         <dependency>
@@ -206,13 +130,6 @@
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${jars_libs_folder}/ProtocolLib.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>libs</groupId>
-            <artifactId>LoneLibs</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${jars_libs_folder}/LoneLibs.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>libs</groupId>

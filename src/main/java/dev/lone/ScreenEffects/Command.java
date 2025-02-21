@@ -1,10 +1,8 @@
 package dev.lone.ScreenEffects;
 
-import dev.lone.ScreenEffects.NMS.GamemodeNMS;
 import dev.lone.itemsadder.api.FontImages.FontImageWrapper;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -13,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class ScreenEffectCommand implements CommandExecutor, TabCompleter
+public class Command implements CommandExecutor, TabCompleter
 {
     private static final List<String> colors = new ArrayList<>();
     public WeakHashMap<Player, Title> sentTitles = new WeakHashMap<>();
@@ -22,7 +20,7 @@ public class ScreenEffectCommand implements CommandExecutor, TabCompleter
     {
         colors.add("#000000");
         colors.add("#FFFFFF");
-        for(ChatColor chatColor : ChatColor.values())
+        for (ChatColor chatColor : ChatColor.values())
         {
             colors.add(chatColor.getName().toUpperCase());
         }
@@ -32,21 +30,21 @@ public class ScreenEffectCommand implements CommandExecutor, TabCompleter
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args)
+    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull org.bukkit.command.Command command, @NotNull String s, @NotNull String[] args)
     {
         List<Player> toShow = new ArrayList<>();
         int playerIndex = 6;
 
-        if(args.length >= 1 && args[0].equals("stop"))
+        if (args.length >= 1 && args[0].equals("stop"))
             playerIndex = 1;
 
-        if(args.length >= playerIndex+1 && (args[playerIndex].equals("all") || Bukkit.getPlayer(args[playerIndex]) != null))
+        if (args.length >= playerIndex + 1 && (args[playerIndex].equals("all") || Bukkit.getPlayer(args[playerIndex]) != null))
         {
             if (commandSender.hasPermission("screeneffect.show.others"))
             {
-                if(args[playerIndex].equals("all"))
+                if (args[playerIndex].equals("all"))
                 {
-                    for(Player p : Bukkit.getOnlinePlayers())
+                    for (Player p : Bukkit.getOnlinePlayers())
                         toShow.add(p);
                 }
                 else
@@ -80,15 +78,15 @@ public class ScreenEffectCommand implements CommandExecutor, TabCompleter
         }
 
         //if stop
-        if(playerIndex == 1)
+        if (playerIndex == 1)
         {
             for (Player player : toShow)
             {
-                GamemodeNMS.showHUD(player);
+                NMS.showHUD(player);
 
                 Main.inst().frozen.remove(player, true);
 
-                if(sentTitles.containsKey(player))
+                if (sentTitles.containsKey(player))
                 {
                     Title tmp = sentTitles.get(player);
                     sendTitle(player, tmp.message, tmp.image, 0, 5, tmp.fadeout);
@@ -102,24 +100,26 @@ public class ScreenEffectCommand implements CommandExecutor, TabCompleter
         }
         else
         {
-            ChatColor color = null;
+            ChatColor color;
             try
             {
                 color = ChatColor.valueOf(args[1]);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 //hex support
                 try
                 {
                     color = ChatColor.of(args[1]);
-                } catch (Exception e2)
+                }
+                catch (Exception e2)
                 {
                     commandSender.sendMessage(ChatColor.YELLOW + "Invalid color! Examples: RED, #770000 (max 6 characters)");
                     return true;
                 }
             }
-            String effect = "effects:" + args[0];
 
+            String effect = "effects:" + args[0];
             int fadein = Integer.parseInt(args[2]);
             int stay = Integer.parseInt(args[3]);
             int fadeout = Integer.parseInt(args[4]);
@@ -131,23 +131,21 @@ public class ScreenEffectCommand implements CommandExecutor, TabCompleter
 
             //https://hub.spigotmc.org/jira/browse/SPIGOT-6608?jql=text%20~%20%22sendtitle%22
             String message = "";
-            if (args.length >= 8)
+            if (args.length < 8)
             {
-                for (int i = 7; i < args.length; i++)
-                {
-                    message += args[i] + " ";
-                }
-                message = message.substring(0, message.length() - 1);
-                message = ChatColor.translateAlternateColorCodes('&', message);
+                message = " ";
             }
             else
             {
-                message = " ";
+                for (int i = 7; i < args.length; i++)
+                    message += args[i] + " ";
+                message = message.substring(0, message.length() - 1);
+                message = ChatColor.translateAlternateColorCodes('&', message);
             }
 
             for (Player player : toShow)
             {
-                showEffect(player, placeholder(player, message), image, fadein, stay, fadeout, freeze);
+                showEffect(player, applyPlaceholders(player, message), image, fadein, stay, fadeout, freeze);
             }
         }
         return true;
@@ -155,16 +153,16 @@ public class ScreenEffectCommand implements CommandExecutor, TabCompleter
 
     private void showEffect(Player player, String message, String image, int fadein, int stay, int fadeout, boolean freeze)
     {
-        if(freeze)
+        if (freeze)
             Main.inst().frozen.put(player, true);
 
-        GamemodeNMS.hideHUD(player);
+        NMS.hideHUD(player);
 
         sendTitle(player, image, message, fadein, stay, fadeout);
 
         sentTitles.put(player, new Title(message, image, fadein, stay, fadeout));
 
-        if(Main.inst().getConfig().getBoolean("execute_commands_on_start.enabled"))
+        if (Main.inst().getConfig().getBoolean("execute_commands_on_start.enabled"))
         {
             for (String cmd : Main.inst().getConfig().getStringList("execute_commands_on_start.commands"))
             {
@@ -173,12 +171,12 @@ public class ScreenEffectCommand implements CommandExecutor, TabCompleter
         }
 
         Bukkit.getScheduler().runTaskLater(Main.inst(), () -> {
-            GamemodeNMS.showHUD(player);
-            if(freeze)
+            NMS.showHUD(player);
+            if (freeze)
                 Main.inst().frozen.remove(player);
         }, fadein + stay + fadeout / 2);
 
-        if(Main.inst().getConfig().getBoolean("execute_commands_on_finish.enabled"))
+        if (Main.inst().getConfig().getBoolean("execute_commands_on_finish.enabled"))
         {
             Bukkit.getScheduler().runTaskLater(Main.inst(), () -> {
 
@@ -193,23 +191,20 @@ public class ScreenEffectCommand implements CommandExecutor, TabCompleter
 
     private void executeCommandForPlayer(Player player, String cmd)
     {
-        cmd = placeholder(player, cmd);
-
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), cmd);
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), applyPlaceholders(player, cmd));
     }
-    
-    private String placeholder(Player player, String cmd) {
-    	if(Main.hasPlaceholderAPI)
+
+    private String applyPlaceholders(Player player, String cmd)
+    {
+        if (Main.HAS_PLACEHOLDER_API)
         {
             //noinspection UnnecessaryFullyQualifiedName
             cmd = me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, cmd);
         }
 
-        cmd = cmd.replace("%player%", player.getName());
         cmd = cmd.replace("%player_name%", player.getName());
         cmd = cmd.replace("{player}", player.getName());
         cmd = cmd.replace("{player_name}", player.getName());
-        
         return cmd;
     }
 
@@ -232,46 +227,46 @@ public class ScreenEffectCommand implements CommandExecutor, TabCompleter
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, Command command, @NotNull String alias, @NotNull String[] args)
+    public List<String> onTabComplete(@NotNull CommandSender sender, org.bukkit.command.Command command, @NotNull String alias, @NotNull String[] args)
     {
-        if(args.length > 1 && args[0].equals("stop"))
+        if (args.length > 1 && args[0].equals("stop"))
         {
-            if(args.length == 2)
+            if (args.length == 2)
             {
                 List<String> players = new ArrayList<>();
                 players.add("all");
-                for(Player p : Bukkit.getOnlinePlayers())
+                for (Player p : Bukkit.getOnlinePlayers())
                     players.add(p.getName());
                 return players;
             }
             return Collections.singletonList("");
         }
 
-        if(args.length == 1)
+        if (args.length == 1)
         {
             return Arrays.asList("stop", "fullscreen", "fullscreen_transparent");
         }
-        else if(args.length == 2)
+        else if (args.length == 2)
         {
             return colors;
         }
-        else if(args.length == 3 || args.length == 4 || args.length == 5)
+        else if (args.length == 3 || args.length == 4 || args.length == 5)
         {
             return Arrays.asList("5", "10", "20", "40", "60", "80", "100");
         }
-        else if(args.length == 6)
+        else if (args.length == 6)
         {
             return Arrays.asList("freeze", "nofreeze");
         }
-        else if(args.length == 7)
+        else if (args.length == 7)
         {
             List<String> players = new ArrayList<>();
             players.add("all");
-            for(Player p : Bukkit.getOnlinePlayers())
+            for (Player p : Bukkit.getOnlinePlayers())
                 players.add(p.getName());
             return players;
         }
-        else if(args.length == 8)
+        else if (args.length == 8)
         {
             return Collections.singletonList("Welcome to my server!");
         }
