@@ -147,7 +147,7 @@ public class ScreenEffectCommand implements CommandExecutor, TabCompleter
 
             for (Player player : toShow)
             {
-                showEffect(player, message, image, fadein, stay, fadeout, freeze);
+                showEffect(player, placeholder(player, message), image, fadein, stay, fadeout, freeze);
             }
         }
         return true;
@@ -193,7 +193,13 @@ public class ScreenEffectCommand implements CommandExecutor, TabCompleter
 
     private void executeCommandForPlayer(Player player, String cmd)
     {
-        if(Main.hasPlaceholderAPI)
+        cmd = placeholder(player, cmd);
+
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), cmd);
+    }
+    
+    private String placeholder(Player player, String cmd) {
+    	if(Main.hasPlaceholderAPI)
         {
             //noinspection UnnecessaryFullyQualifiedName
             cmd = me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, cmd);
@@ -203,8 +209,8 @@ public class ScreenEffectCommand implements CommandExecutor, TabCompleter
         cmd = cmd.replace("%player_name%", player.getName());
         cmd = cmd.replace("{player}", player.getName());
         cmd = cmd.replace("{player_name}", player.getName());
-
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), cmd);
+        
+        return cmd;
     }
 
     /**
