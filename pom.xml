@@ -41,6 +41,12 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <relocations>
+                                <relocation>
+                                    <pattern>com.alessiodp.libby</pattern>
+                                    <shadedPattern>dev.lone.ScreenEffects.libs.libby</shadedPattern>
+                                </relocation>
+                            </relocations>
                         </configuration>
                     </execution>
                 </executions>
@@ -117,9 +123,14 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.alessiodp.libby</groupId>
+            <artifactId>libby-bukkit</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>beer.devs</groupId>
             <artifactId>FastNbt-jar</artifactId>
-            <version>1.4.8</version>
+            <version>1.4.14</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

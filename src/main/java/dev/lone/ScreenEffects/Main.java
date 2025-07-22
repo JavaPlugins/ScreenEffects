@@ -47,6 +47,17 @@ public final class Main extends JavaPlugin implements Listener
         Msg.setPrefix("[ScreenEffects] ");
         Msg.setPrefixConsole("[ScreenEffects] ");
 
+        try
+        {
+            new LibsLoader(this).loadAll();
+        }
+        catch (Exception e)
+        {
+            Msg.error("Failed to load libraries, please check the console for more details.", e);
+            stop();
+            return;
+        }
+
         IS_PAPER = NMS.isPaper();
 
         is_v_17_more = Version.isAtLeast(Version.v1_17_R1);
@@ -63,23 +74,41 @@ public final class Main extends JavaPlugin implements Listener
         saveDefaultConfig();
     }
 
+    private void stop()
+    {
+        Bukkit.getPluginManager().disablePlugin(this);
+        Bukkit.getServer().shutdown();
+    }
+
     /**
-     * Tested on vanilla game
-     * 1.15.2, 1.16.5, 1.19.3
-     * title = message
-     * subtitle = image
-     *
-     * 1.17.1, 1.18.2
-     * title = image
-     * subtitle = message
-     *
-     * On some versions the rendering order of title and subtitle layers are inverted.
+     * On some versions the rendering order of title and subtitle layers is inverted.
      */
     public static boolean hasTitleBug(Player player)
     {
-        if(Main.HAS_VIA_VERSION)
-            return !ViaVersionWrapper.isVersionGreaterThan1_16_5(player);
-        return !Main.is_v_17_more;
+        Version version;
+        if(HAS_VIA_VERSION)
+            version = ViaVersionWrapper.getVersion(player);
+        else
+            version = Version.get();
+
+        if(version.id <= Version.v1_16_R3.id)
+            return true;
+
+        switch (version)
+        {
+            case v1_20_6:
+            case v1_21_1:
+            case v1_21_3:
+            case v1_21_4:
+            case v1_21_5:
+                return false;
+            case v1_21_6:
+            case v1_21_7:
+            case v1_21_8:
+                return true;
+        }
+
+        return false;
     }
 
     private void extractDefaultStuff()

@@ -1,12 +1,25 @@
 package dev.lone.ScreenEffects;
 
+import beer.devs.fastnbt.nms.Version;
 import com.viaversion.viaversion.api.Via;
 import org.bukkit.entity.Player;
 
 public class ViaVersionWrapper
 {
-    public static boolean isVersionGreaterThan1_16_5(Player player)
+    public static Version getVersion(Player player)
     {
-        return Via.getAPI().getPlayerVersion(player.getUniqueId()) > 754;//https://wiki.vg/Protocol_version_numbers
+        int versionId = Via.getAPI().getPlayerVersion(player.getUniqueId());
+        Version nearest = null;
+        int minDiff = Integer.MAX_VALUE;
+        for (Version value : Version.values())
+        {
+            int diff = Math.abs(value.id - versionId);
+            if (diff < minDiff)
+            {
+                minDiff = diff;
+                nearest = value;
+            }
+        }
+        return nearest;
     }
 }
