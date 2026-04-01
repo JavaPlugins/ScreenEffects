@@ -12,7 +12,7 @@ depend:
   - ItemsAdder
   - ProtocolLib
 libraries-libby:
-  - beer.devs:FastNbt-jar:1.4.14 --remap
+  - beer.devs:FastNbt-jar:1.4.16 --remap
   - org.fusesource.jansi:jansi:2.4.1
   - commons-io:commons-io:2.18.0
   - org.jetbrains:annotations:17.0.0

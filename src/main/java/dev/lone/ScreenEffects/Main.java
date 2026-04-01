@@ -105,6 +105,8 @@ public final class Main extends JavaPlugin implements Listener
             case v1_21_6:
             case v1_21_7:
             case v1_21_8:
+            case v1_21_10:
+            case v1_21_11:
                 return true;
         }
 
