@@ -15,7 +15,6 @@
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jars_libs_folder>C:/Progetti/Minecraft/Spigot/_jars</jars_libs_folder>
     </properties>
 
     <build>
@@ -48,28 +47,6 @@
                                 </relocation>
                             </relocations>
                         </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <executions>
-                    <execution>
-                        <id>CopyFile</id>
-                        <phase>package</phase>
-                        <configuration>
-                            <executable>cmd</executable>
-                            <workingDirectory>${project.parent.basedir}</workingDirectory>
-                            <arguments>
-                                <argument>/C</argument>
-                                <argument>maven_exec\CopyFile.bat</argument>
-                            </arguments>
-                        </configuration>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
                     </execution>
                 </executions>
             </plugin>
